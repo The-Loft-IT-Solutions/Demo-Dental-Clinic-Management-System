@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Dental Clinic Manager - Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="show-option-a" data-theme="light">
+
+<!-- Accessibility Toolbar -->
+<div class="access-toolbar" id="access-toolbar">
+  <div class="toolbar-left">
+    <span class="toolbar-label">Package</span>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="switchOption('a')" id="btn-opt-a">Basic</button>
+      <button class="toggle-btn" onclick="switchOption('b')" id="btn-opt-b">Pro</button>
+    </div>
+    <span class="option-badge option-a" id="option-badge">Basic</span>
+  </div>
+  <div class="toolbar-right">
+    <span class="toolbar-label">Text</span>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="setFontSize('normal')" id="btn-font-normal">Normal</button>
+      <button class="toggle-btn" onclick="setFontSize('large')" id="btn-font-large">Large</button>
+    </div>
+    <span class="toolbar-label" style="margin-left:8px">Contrast</span>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="setContrast('normal')" id="btn-contrast-normal">Normal</button>
+      <button class="toggle-btn" onclick="setContrast('high')" id="btn-contrast-high">High</button>
+    </div>
+    <button class="voice-btn" id="global-voice-btn" onclick="toggleGlobalVoice()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+      Voice
+    </button>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle dark mode">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+  </div>
+  <button class="toolbar-collapse" id="toolbar-collapse" onclick="toggleToolbar()" aria-label="Collapse toolbar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+</div>
+
+<!-- Mobile Header -->
+<header class="mobile-header" id="mobile-header">
+  <button class="mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="mobile-logo">
+    <div class="logo-icon">DC</div>
+    <span class="logo-text">Dental Clinic</span>
+  </div>
+  <button class="mobile-search-btn" onclick="toggleMobileSearch()" aria-label="Search">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  </button>
+</header>
+
+<!-- Mobile Search Overlay -->
+<div class="mobile-search-overlay" id="mobile-search-overlay">
+  <div class="mobile-search-header">
+    <button class="mobile-search-close" onclick="toggleMobileSearch()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <input type="text" placeholder="Search patients, appointments..." class="mobile-search-input" id="mobile-search-input">
+  </div>
+  <div class="mobile-search-results" id="mobile-search-results"></div>
+</div>
+
+<!-- Mobile Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+<div class="app-container">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="logo-icon">DC</div>
+        <div class="logo-text">
+          <h1>Dental Clinic</h1>
+          <p>Manager</p>
+        </div>
+      </div>
+      <button class="sidebar-close" onclick="toggleMobileSidebar()" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <div class="nav-item active" onclick="navigateTo('dashboard')" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Dashboard</span>
+        <span class="nav-badge">3</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('patients')" data-page="patients">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Patients</span>
+        <span class="nav-badge">245</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('appointments')" data-page="appointments">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Appointments</span>
+        <span class="nav-badge">8</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('billing')" data-page="billing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Billing</span>
+      </div>
+      <div class="nav-item option-b-only" onclick="navigateTo('reports')" data-page="reports">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        <span>Reports</span>
+        <span class="feature-tag tag-option-b">Pro</span>
+      </div>
+      <div class="nav-item" onclick="navigateTo('settings')" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Settings</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card" onclick="toggleUserMenu()">
+        <div class="user-avatar">DR</div>
+        <div class="user-info">
+          <h4>Dr. Demo</h4>
+          <p>Dentist</p>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="user-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="user-menu" id="user-menu">
+        <button class="user-menu-item" onclick="navigateTo('settings')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Profile Settings
+        </button>
+        <button class="user-menu-item" onclick="showToast('Help documentation opened')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Help & Support
+        </button>
+        <div class="user-menu-divider"></div>
+        <button class="user-menu-item text-danger" onclick="navigateTo('login')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" id="main-content">
+
+    <!-- ==================== DASHBOARD PAGE ==================== -->
+    <div class="page active" id="page-dashboard">
+      <div class="demo-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div>
+          <h3>Interactive Demo</h3>
+          <p>Click through to explore features. Use the toolbar to switch between Basic and Pro packages.</p>
+        </div>
+      </div>
+
+      <div class="page-header">
+        <div class="page-title">
+          <h2>Dashboard</h2>
+          <p>Welcome back! Here is what is happening today.</p>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-primary btn-lg" onclick="navigateTo('patients-new')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Patient
+          </button>
+          <button class="btn btn-secondary" onclick="navigateTo('appointments-new')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            New Appointment
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid" id="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          </div>
+          <div class="stat-value" data-count="245">0</div>
+          <div class="stat-label">Total Patients</div>
+          <div class="stat-change up">+12 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          </div>
+          <div class="stat-value" data-count="8">0</div>
+          <div class="stat-label">Today's Appointments</div>
+          <div class="stat-change up">3 confirmed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          </div>
+          <div class="stat-value" data-count="125" data-prefix="" data-suffix="K">0</div>
+          <div class="stat-label">Monthly Revenue</div>
+          <div class="stat-change up">+8% vs last month</div>
+        </div>
+        <div class="stat-card option-b-only">
+          <div class="stat-header">
+            <div class="stat-icon red"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <span class="feature-tag tag-option-b">Pro</span>
+          </div>
+          <div class="stat-value" data-count="3">0</div>
+          <div class="stat-label">Overdue Invoices</div>
+          <div class="stat-change down">7,500 total</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card dashboard-schedule">
+          <div class="card-header">
+            <h3 class="card-title">Today's Schedule</h3>
+            <button class="btn btn-sm btn-secondary" onclick="navigateTo('appointments')">View All</button>
+          </div>
+          <div class="recent-list" id="dashboard-schedule-list"></div>
+        </div>
+
+        <div class="dashboard-sidebar">
+          <div class="card dashboard-search">
+            <div class="card-header">
+              <h3 class="card-title">Quick Search</h3>
+            </div>
+            <div class="search-box" style="max-width:100%">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" placeholder="Search by name or phone..." oninput="handleSearch(this)" id="dashboard-search">
+              <div class="search-results" id="dashboard-search-results"></div>
+            </div>
+            <div class="option-b-only" style="margin-top:16px">
+              <div class="qr-placeholder" style="margin:0 auto">
+                <div>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                  <div style="margin-top:4px">Scan QR</div>
+                </div>
+              </div>
+              <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:8px">Pro: QR code lookup</p>
+            </div>
+          </div>
+
+          <div class="card option-b-only dashboard-alerts">
+            <div class="card-header">
+              <h3 class="card-title">Alerts</h3>
+              <span class="feature-tag tag-option-b">Pro</span>
+            </div>
+            <div class="alert-list" id="dashboard-alerts-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PATIENTS LIST PAGE ==================== -->
+    <div class="page" id="page-patients">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>Patients</h2>
+          <p>Manage and search patient records</p>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="navigateTo('patients-new')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Patient
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="patients-toolbar">
+          <div class="search-box" style="max-width:400px;flex:1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" placeholder="Search by name or phone..." id="patients-search-input" oninput="filterPatients(this.value)">
+          </div>
+          <div class="option-b-only filter-chips-wrapper">
+            <span style="font-size:13px;color:var(--text-muted);white-space:nowrap">Filters:</span>
+            <div class="filter-chips" id="patient-filters">
+              <button class="chip active" data-filter="all" onclick="setPatientFilter(this)">All</button>
+              <button class="chip" data-filter="recent" onclick="setPatientFilter(this)">Recent</button>
+              <button class="chip" data-filter="appointments" onclick="setPatientFilter(this)">With Appointments</button>
+              <button class="chip" data-filter="balance" onclick="setPatientFilter(this)">With Balance</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container" id="patients-table-container">
+          <table id="patients-table">
+            <thead>
+              <tr>
+                <th onclick="sortPatients('name')">Patient <span class="sort-indicator">&#8597;</span></th>
+                <th onclick="sortPatients('phone')">Phone <span class="sort-indicator">&#8597;</span></th>
+                <th onclick="sortPatients('lastVisit')">Last Visit <span class="sort-indicator">&#8597;</span></th>
+                <th onclick="sortPatients('nextAppt')">Next Appt <span class="sort-indicator">&#8597;</span></th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="patients-table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="mobile-cards" id="patients-mobile-cards"></div>
+        <div class="pagination" id="patients-pagination"></div>
+      </div>
+    </div>
+
+    <!-- ==================== NEW PATIENT PAGE ==================== -->
+    <div class="page" id="page-patients-new">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>New Patient</h2>
+          <p>Register a new patient record</p>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-secondary" onclick="navigateTo('patients')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            Back to List
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <form id="new-patient-form" onsubmit="savePatient(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name <span class="required">*</span></label>
+              <div class="voice-input-wrapper">
+                <input type="text" placeholder="Enter first name" id="firstName" required>
+                <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" title="Voice input">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name <span class="required">*</span></label>
+              <div class="voice-input-wrapper">
+                <input type="text" placeholder="Enter last name" id="lastName" required>
+                <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" title="Voice input">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number <span class="required">*</span></label>
+              <input type="tel" placeholder="0917 123 4567" id="phone" required pattern="[0-9]{11}">
+              <p class="form-hint">Used for appointment reminders</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" placeholder="patient@email.com" id="email">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date of Birth</label>
+              <input type="date" id="dob" max="">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gender</label>
+              <select id="gender">
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <div class="voice-input-wrapper">
+              <textarea placeholder="Enter full address" id="address" rows="3"></textarea>
+              <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" style="top:12px" title="Voice input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="section-divider"><span>Medical Information</span></div>
+
+          <div class="form-group">
+            <label class="form-label">Medical History</label>
+            <div class="voice-input-wrapper">
+              <textarea placeholder="List any medical conditions, allergies, medications..." id="medicalHistory" rows="4"></textarea>
+              <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" style="top:12px" title="Voice input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+              </button>
+            </div>
+            <p class="form-hint">Important for treatment planning</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Allergies</label>
+            <div class="voice-input-wrapper">
+              <textarea placeholder="List any known allergies (medications, latex, etc.)" id="allergies" rows="3"></textarea>
+              <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" style="top:12px" title="Voice input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="option-note">
+            <strong>Pro Package:</strong> Per-tooth charting will be available after saving the patient record. Basic uses dental notes only.
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="navigateTo('patients')">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+              Save Patient
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== PATIENT DETAIL PAGE ==================== -->
+    <div class="page" id="page-patients-detail">
+      <div class="page-header">
+        <div class="page-title">
+          <h2 id="detail-patient-name">Maria Santos</h2>
+          <p id="detail-patient-meta">DC-2026-001 &bull; 0917 123 4567</p>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-secondary" onclick="navigateTo('patients')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary" onclick="toggleEditMode()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+            <span id="edit-btn-text">Edit</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tabs" id="patient-tabs">
+        <button class="tab active" onclick="switchTab(this, 'tab-info')">Information</button>
+        <button class="tab" onclick="switchTab(this, 'tab-teeth')">Tooth Chart</button>
+        <button class="tab" onclick="switchTab(this, 'tab-files')">Files</button>
+        <button class="tab" onclick="switchTab(this, 'tab-treatments')">Treatments</button>
+        <button class="tab" onclick="switchTab(this, 'tab-appointments')">Appointments</button>
+      </div>
+
+      <!-- Tab: Information -->
+      <div class="tab-content active" id="tab-info">
+        <div class="card">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" value="Maria" disabled class="detail-field" data-field="firstName">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" value="Santos" disabled class="detail-field" data-field="lastName">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="text" value="0917 123 4567" disabled class="detail-field" data-field="phone">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="text" value="maria.santos@email.com" disabled class="detail-field" data-field="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date of Birth</label>
+              <input type="text" value="March 15, 1985" disabled class="detail-field" data-field="dob">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gender</label>
+              <input type="text" value="Female" disabled class="detail-field" data-field="gender">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <textarea disabled class="detail-field" data-field="address" rows="3">Block 6 Lot 2, Sample Subdivision, City</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Medical History</label>
+            <textarea disabled class="detail-field" data-field="medicalHistory" rows="4">Hypertension (controlled). No known drug allergies. Previous dental work: 2 fillings (2019).</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Allergies</label>
+            <textarea disabled class="detail-field" data-field="allergies" rows="2">None known</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Tooth Chart -->
+      <div class="tab-content" id="tab-teeth">
+        <div class="card option-a-only">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+            <h3>Basic Dental Notes</h3>
+            <p>Basic package uses simple text notes for dental records. No visual tooth charting.</p>
+            <div class="form-group" style="max-width:600px;margin:24px auto 0;text-align:left">
+              <label class="form-label">Dental Notes</label>
+              <div class="voice-input-wrapper">
+                <textarea placeholder="Enter dental observations and treatment notes here..." rows="4">Upper right molar (tooth 16) - Deep cavity noted. Recommended root canal treatment. Patient advised to schedule follow-up.</textarea>
+                <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" style="top:12px" title="Voice input">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card option-b-only">
+          <div class="card-header">
+            <h3 class="card-title">Per-Tooth Charting <span class="feature-tag tag-option-b">Pro</span></h3>
+            <div class="quick-actions">
+              <button class="btn btn-sm btn-secondary" onclick="showToast('Printing tooth chart...')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+                Print
+              </button>
+            </div>
+          </div>
+          <div class="tooth-chart-container">
+            <div>
+              <p class="jaw-label">UPPER JAW (FDI 11-18, 21-28)</p>
+              <div class="jaw-row" id="upper-jaw"></div>
+            </div>
+            <div>
+              <p class="jaw-label">LOWER JAW (FDI 31-38, 41-48)</p>
+              <div class="jaw-row" id="lower-jaw"></div>
+            </div>
+            <div class="tooth-legend" id="tooth-legend"></div>
+            <p style="font-size:13px;color:var(--text-muted);text-align:center">Click any tooth to view or update its status</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Files -->
+      <div class="tab-content" id="tab-files">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Attached Files</h3>
+            <button class="btn btn-primary" onclick="document.getElementById('file-upload-input').click()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>
+              Upload Files
+            </button>
+            <input type="file" id="file-upload-input" style="display:none" accept="image/*,.pdf" multiple onchange="handleFileUpload(this)">
+          </div>
+
+          <div class="upload-zone" id="upload-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" onclick="document.getElementById('file-upload-input').click()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>
+            <h3>Drag & Drop Files Here</h3>
+            <p>or click to browse. Supports X-rays, photos, and PDFs (max 10MB)</p>
+          </div>
+
+          <div class="file-gallery" id="file-gallery"></div>
+
+          <div class="option-b-only" style="margin-top:32px">
+            <div class="section-divider"><span>Before / After Comparison</span></div>
+            <div style="display:flex;justify-content:center">
+              <div class="comparison-container" onmousemove="handleComparison(event, this)" ontouchmove="handleComparisonTouch(event, this)">
+                <div class="comparison-after">After Treatment</div>
+                <div class="comparison-before">Before Treatment</div>
+                <div class="comparison-slider"></div>
+              </div>
+            </div>
+            <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:12px">
+              <span class="feature-tag tag-option-b">Pro</span> Drag the slider to compare before and after images
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Treatments -->
+      <div class="tab-content" id="tab-treatments">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Treatment History</h3>
+            <button class="btn btn-primary" onclick="showToast('New treatment form...')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Treatment
+            </button>
+          </div>
+          <div class="timeline" id="treatment-timeline"></div>
+        </div>
+      </div>
+
+      <!-- Tab: Appointments -->
+      <div class="tab-content" id="tab-appointments">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Appointment History</h3>
+            <button class="btn btn-primary" onclick="navigateTo('appointments-new')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Schedule
+            </button>
+          </div>
+          <div class="recent-list" id="patient-appointment-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== APPOINTMENTS LIST PAGE ==================== -->
+    <div class="page" id="page-appointments">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>Appointments</h2>
+          <p>Manage clinic schedule</p>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="navigateTo('appointments-new')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Appointment
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="calendar-header">
+          <div class="calendar-title-group">
+            <h3 class="card-title" style="margin:0" id="calendar-month">June 2026</h3>
+            <div class="calendar-nav">
+              <button class="btn btn-sm btn-secondary" onclick="changeMonth(-1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button class="btn btn-sm btn-secondary" onclick="changeMonth(1)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+              <button class="btn btn-sm btn-secondary" onclick="goToToday()">Today</button>
+            </div>
+          </div>
+          <div class="quick-actions calendar-views">
+            <button class="btn btn-sm btn-secondary active" data-view="month" onclick="setCalendarView(this, 'month')">Month</button>
+            <button class="btn btn-sm btn-secondary option-b-only" data-view="week" onclick="setCalendarView(this, 'week')">Week</button>
+            <button class="btn btn-sm btn-secondary" data-view="day" onclick="setCalendarView(this, 'day')">Day</button>
+          </div>
+        </div>
+
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+
+      <div class="card" style="margin-top:24px">
+        <div class="card-header">
+          <h3 class="card-title">Upcoming Appointments</h3>
+        </div>
+        <div class="recent-list" id="upcoming-appointments-list"></div>
+      </div>
+    </div>
+
+    <!-- ==================== NEW APPOINTMENT PAGE ==================== -->
+    <div class="page" id="page-appointments-new">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>New Appointment</h2>
+          <p>Schedule a new appointment</p>
+        </div>
+        <button class="btn btn-secondary" onclick="navigateTo('appointments')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Calendar
+        </button>
+      </div>
+
+      <div class="card" style="max-width:700px">
+        <form id="new-appointment-form" onsubmit="saveAppointment(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Patient <span class="required">*</span></label>
+              <div class="search-box" style="max-width:100%">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" placeholder="Search patient..." id="appt-patient-search" oninput="searchPatientsForAppt(this)" required>
+                <div class="search-results" id="appt-search-results"></div>
+              </div>
+              <input type="hidden" id="appt-patient-id">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Appointment Type <span class="required">*</span></label>
+              <select id="appt-type" required>
+                <option value="">Select type</option>
+                <option value="checkup">Check-up</option>
+                <option value="cleaning">Cleaning</option>
+                <option value="treatment">Treatment</option>
+                <option value="followup">Follow-up</option>
+                <option value="consultation">Consultation</option>
+                <option value="emergency">Emergency</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date <span class="required">*</span></label>
+              <input type="date" id="appt-date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time <span class="required">*</span></label>
+              <input type="time" id="appt-time" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Dentist</label>
+            <select id="appt-dentist">
+              <option value="">Select dentist</option>
+              <option value="1">Dr. Demo</option>
+              <option value="2">Dr. Reyes</option>
+              <option value="3">Dr. Santos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Notes</label>
+            <div class="voice-input-wrapper">
+              <textarea placeholder="Additional notes..." id="appt-notes" rows="3"></textarea>
+              <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" style="top:12px" title="Voice input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="option-b-only">
+            <div class="form-group">
+              <label class="form-label">
+                <span class="feature-tag tag-option-b" style="margin-right:8px">Pro</span>
+                Send Email Reminder
+              </label>
+              <div style="display:flex;align-items:center;gap:12px">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;font-weight:400">
+                  <input type="checkbox" checked id="appt-reminder" style="width:20px;height:20px">
+                  Send reminder 24 hours before appointment
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="navigateTo('appointments')">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+              Schedule Appointment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==================== BILLING PAGE ==================== -->
+    <div class="page" id="page-billing">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>Billing</h2>
+          <p>Invoices and payments</p>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="navigateTo('billing-new')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Invoice
+        </button>
+      </div>
+
+      <div class="stats-grid option-b-only" id="billing-stats">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/></svg></div>
+            <span class="feature-tag tag-option-b">Pro</span>
+          </div>
+          <div class="stat-value">125K</div>
+          <div class="stat-label">Total Revenue (Jun)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <span class="feature-tag tag-option-b">Pro</span>
+          </div>
+          <div class="stat-value">42</div>
+          <div class="stat-label">Treatments Done</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-icon red"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <span class="feature-tag tag-option-b">Pro</span>
+          </div>
+          <div class="stat-value">3</div>
+          <div class="stat-label">Pending Payments</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Recent Invoices</h3>
+          <div class="option-b-inline" id="billing-filters">
+            <span style="font-size:13px;color:var(--text-muted)">Filter:</span>
+            <div class="filter-chips" style="margin-bottom:0">
+              <button class="chip active" onclick="filterInvoices('all', this)">All</button>
+              <button class="chip" onclick="filterInvoices('paid', this)">Paid</button>
+              <button class="chip" onclick="filterInvoices('pending', this)">Pending</button>
+              <button class="chip" onclick="filterInvoices('overdue', this)">Overdue</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table id="invoices-table">
+            <thead>
+              <tr><th>Invoice #</th><th>Patient</th><th>Date</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="invoices-table-body"></tbody>
+          </table>
+        </div>
+        <div class="mobile-cards" id="invoices-mobile-cards"></div>
+      </div>
+    </div>
+
+    <!-- ==================== NEW INVOICE PAGE ==================== -->
+    <div class="page" id="page-billing-new">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>New Invoice</h2>
+          <p>Create a new invoice</p>
+        </div>
+        <button class="btn btn-secondary" onclick="navigateTo('billing')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Back
+        </button>
+      </div>
+
+      <div class="invoice-layout">
+        <div class="card">
+          <form id="new-invoice-form" onsubmit="saveInvoice(event)">
+            <div class="form-group">
+              <label class="form-label">Patient <span class="required">*</span></label>
+              <div class="search-box" style="max-width:100%">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" placeholder="Search patient..." id="invoice-patient-search" oninput="searchPatientsForInvoice(this)" required>
+                <div class="search-results" id="invoice-search-results"></div>
+              </div>
+              <input type="hidden" id="invoice-patient-id">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Treatment / Service <span class="required">*</span></label>
+              <select id="invoice-treatment" required>
+                <option value="">Select treatment</option>
+                <option value="cleaning">Dental Cleaning</option>
+                <option value="filling">Tooth Filling</option>
+                <option value="rootcanal">Root Canal Treatment</option>
+                <option value="extraction">Tooth Extraction</option>
+                <option value="crown">Crown Installation</option>
+                <option value="consultation">Consultation</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Amount (PHP) <span class="required">*</span></label>
+                <input type="number" placeholder="0.00" id="invoice-amount" min="0" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Discount</label>
+                <input type="number" placeholder="0.00" id="invoice-discount" min="0" step="0.01" value="0">
+              </div>
+            </div>
+
+            <div class="form-group option-b-only">
+              <label class="form-label">
+                <span class="feature-tag tag-option-b" style="margin-right:8px">Pro</span>
+                Payment Method
+              </label>
+              <div class="payment-methods" id="payment-methods">
+                <div class="payment-method selected" data-method="cash" onclick="selectPayment(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                  <span>Cash</span>
+                </div>
+                <div class="payment-method" data-method="card" onclick="selectPayment(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                  <span>Card</span>
+                </div>
+                <div class="payment-method" data-method="gcash" onclick="selectPayment(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 8h.01"/><path d="M12 12h.01"/><path d="M8 16h.01"/></svg>
+                  <span>GCash</span>
+                </div>
+                <div class="payment-method" data-method="maya" onclick="selectPayment(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                  <span>Maya</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Notes</label>
+              <textarea placeholder="Additional notes..." id="invoice-notes" rows="3"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="navigateTo('billing')">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                Create Invoice
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card invoice-preview-card">
+          <div class="invoice-preview" id="invoice-preview">
+            <div class="invoice-header">
+              <div>
+                <div class="invoice-logo">Dental Clinic</div>
+                <p style="font-size:13px;color:var(--text-muted);margin-top:4px">Manager</p>
+              </div>
+              <div class="invoice-meta">
+                <h3>Invoice #</h3>
+                <p id="preview-invoice-num">INV-2026-005</p>
+                <h3 style="margin-top:8px">Date</h3>
+                <p id="preview-invoice-date">Jun 20, 2026</p>
+              </div>
+            </div>
+            <div style="margin-bottom:16px">
+              <h4 style="font-size:13px;color:var(--text-muted);margin-bottom:4px">Bill To:</h4>
+              <p style="font-weight:600" id="preview-patient-name">Patient Name</p>
+              <p style="font-size:13px;color:var(--text-muted)" id="preview-patient-phone">---</p>
+            </div>
+            <div class="invoice-body">
+              <div class="invoice-row" style="font-weight:600;border-bottom:2px solid var(--border)">
+                <span>Description</span><span>Amount</span>
+              </div>
+              <div class="invoice-row">
+                <span id="preview-treatment">---</span>
+                <span id="preview-amount">0.00</span>
+              </div>
+              <div class="invoice-row">
+                <span>Discount</span>
+                <span style="color:var(--success)" id="preview-discount">-0.00</span>
+              </div>
+              <div class="invoice-row total">
+                <span>Total</span>
+                <span id="preview-total">0.00</span>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border)">
+              <p style="font-size:13px;color:var(--text-muted)">Thank you for choosing our Dental Clinic!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== INVOICE DETAIL PAGE ==================== -->
+    <div class="page" id="page-billing-invoice">
+      <div class="page-header">
+        <div class="page-title">
+          <h2 id="invoice-detail-title">Invoice INV-2026-001</h2>
+          <p id="invoice-detail-meta">Maria Santos &bull; Jun 15, 2026</p>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-secondary" onclick="navigateTo('billing')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary" onclick="window.print()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+            Print / PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="invoice-preview" id="invoice-detail-preview">
+          <div class="invoice-header">
+            <div>
+              <div class="invoice-logo">Dental Clinic</div>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:4px">Manager</p>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:8px">123 Clinic Street<br>City, Country<br>+63 123 456 7890</p>
+            </div>
+            <div class="invoice-meta">
+              <h3>Invoice #</h3><p>INV-2026-001</p>
+              <h3 style="margin-top:12px">Date</h3><p>June 15, 2026</p>
+              <h3 style="margin-top:12px">Status</h3><p><span class="status-badge status-completed">Paid</span></p>
+            </div>
+          </div>
+          <div style="margin-bottom:24px">
+            <h4 style="font-size:13px;color:var(--text-muted);margin-bottom:4px">Bill To:</h4>
+            <p style="font-weight:600;font-size:16px">Maria Santos</p>
+            <p style="font-size:14px;color:var(--text-muted)">0917 123 4567</p>
+            <p style="font-size:14px;color:var(--text-muted)">maria.santos@email.com</p>
+          </div>
+          <div class="invoice-body">
+            <div class="invoice-row" style="font-weight:600;border-bottom:2px solid var(--border)">
+              <span>Description</span><span style="text-align:right;width:120px">Amount</span>
+            </div>
+            <div class="invoice-row"><span>Dental Cleaning &amp; Check-up</span><span style="text-align:right;width:120px">1,500.00</span></div>
+            <div class="invoice-row" style="border:none"><span>Subtotal</span><span style="text-align:right;width:120px">1,500.00</span></div>
+            <div class="invoice-row" style="border:none"><span>Discount</span><span style="text-align:right;width:120px;color:var(--success)">0.00</span></div>
+            <div class="invoice-row total"><span>Total Amount</span><span style="text-align:right;width:120px">1,500.00</span></div>
+          </div>
+          <div style="text-align:center;margin-top:32px;padding-top:24px;border-top:2px solid var(--border)">
+            <p style="font-size:14px;color:var(--text-muted)">Thank you for choosing our Dental Clinic!</p>
+            <p style="font-size:13px;color:var(--text-muted);margin-top:8px">Please keep this invoice for your records.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== REPORTS PAGE (Pro Only) ==================== -->
+    <div class="page" id="page-reports">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>Reports & Analytics</h2>
+          <p>Revenue and clinic performance</p>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-secondary" onclick="showToast('Exporting to PDF...')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+            Export PDF
+          </button>
+          <button class="btn btn-secondary" onclick="showToast('Exporting to Excel...')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Export Excel
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/></svg></div></div>
+          <div class="stat-value">125K</div><div class="stat-label">Monthly Revenue</div><div class="stat-change up">+8% vs May</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+          <div class="stat-value">42</div><div class="stat-label">New Patients (Jun)</div><div class="stat-change up">+5 vs May</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div></div>
+          <div class="stat-value">156</div><div class="stat-label">Total Appointments</div><div class="stat-change up">+12 vs May</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header"><div class="stat-icon red"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div></div>
+          <div class="stat-value">7,500</div><div class="stat-label">Outstanding Balance</div><div class="stat-change down">3 invoices</div>
+        </div>
+      </div>
+
+      <div class="reports-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Monthly Revenue</h3>
+            <div class="quick-actions">
+              <button class="btn btn-sm btn-secondary active">6 Months</button>
+              <button class="btn btn-sm btn-secondary">1 Year</button>
+            </div>
+          </div>
+          <div class="chart-bar" id="revenue-chart"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Treatment Breakdown</h3></div>
+          <div class="treatment-breakdown" id="treatment-breakdown"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SETTINGS PAGE ==================== -->
+    <div class="page" id="page-settings">
+      <div class="page-header">
+        <div class="page-title">
+          <h2>Settings</h2>
+          <p>Manage clinic and user settings</p>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Clinic Information</h3></div>
+          <form id="clinic-settings-form" onsubmit="saveClinicSettings(event)">
+            <div class="form-group">
+              <label class="form-label">Clinic Name</label>
+              <input type="text" value="Dental Clinic" id="clinic-name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Address</label>
+              <textarea id="clinic-address" rows="3">123 Clinic Street, City, Country</textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" value="+63 123 456 7890" id="clinic-phone">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" value="clinic@demo.com" id="clinic-email">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+              Save Changes
+            </button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">User Management</h3>
+            <span class="feature-tag tag-option-b option-b-only">Pro</span>
+          </div>
+          <div class="option-b-only">
+            <div class="recent-list" id="users-list"></div>
+            <button class="btn btn-primary" style="margin-top:16px" onclick="showToast('Add user dialog...')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add User
+            </button>
+          </div>
+          <div class="option-a-only">
+            <div class="empty-state" style="padding:32px">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              <h3>Simple User Management</h3>
+              <p>Basic package includes simple admin/staff login. Full role-based access is available in Pro.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== LOGIN PAGE ==================== -->
+    <div class="page" id="page-login">
+      <div class="login-container">
+        <div class="login-card-wrapper">
+          <div class="login-branding">
+            <div class="login-logo">DC</div>
+            <h1>Dental Clinic</h1>
+            <p>Management System</p>
+          </div>
+          <div class="login-form-card">
+            <form id="login-form" onsubmit="handleLogin(event)">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" placeholder="Enter your email" value="demo@clinic.com" id="login-email" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="password-wrapper">
+                  <input type="password" placeholder="Enter your password" value="password" id="login-password" required>
+                  <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="login-options">
+                <label class="remember-me"><input type="checkbox" checked> Remember me</label>
+                <a href="#" onclick="showToast('Password reset link sent')">Forgot password?</a>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                Sign In
+              </button>
+              <div class="option-b-only" style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);text-align:center">
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Pro: Sign in with</p>
+                <button type="button" class="btn btn-secondary" style="min-width:auto;padding:0 16px" onclick="showToast('Google sign-in...')">
+                  <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <p class="login-footer">Powered by Demo Systems</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Tooth Detail Modal -->
+<div class="modal-overlay" id="tooth-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Tooth #<span id="tooth-number">16</span> Details</h3>
+      <button class="modal-close" onclick="closeModal('tooth-modal')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select id="tooth-status">
+          <option value="healthy">Healthy</option>
+          <option value="decayed">Decayed</option>
+          <option value="filled">Filled</option>
+          <option value="extracted">Extracted</option>
+          <option value="crown">Crown</option>
+          <option value="root-canal">Root Canal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <div class="voice-input-wrapper">
+          <textarea id="tooth-notes" placeholder="Enter notes about this tooth..." rows="3"></textarea>
+          <button type="button" class="voice-input-btn" onclick="toggleVoiceInput(this)" style="top:12px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="option-b-only">
+        <div class="form-group">
+          <label class="form-label"><span class="feature-tag tag-option-b" style="margin-right:8px">Pro</span>Treatment History</label>
+          <div class="timeline" style="padding-left:0">
+            <div class="timeline-item completed"><div class="timeline-date">Jun 15, 2026</div><div class="timeline-title">Check-up - No issues</div></div>
+            <div class="timeline-item completed"><div class="timeline-date">Mar 10, 2026</div><div class="timeline-title">Filling placed</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('tooth-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveToothStatus()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- File Viewer Modal -->
+<div class="modal-overlay" id="file-viewer-modal">
+  <div class="modal modal-large">
+    <div class="modal-header">
+      <h3 id="file-viewer-title">File Preview</h3>
+      <button class="modal-close" onclick="closeModal('file-viewer-modal')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div class="file-viewer-content" id="file-viewer-content">
+        <img src="" alt="File preview" id="file-viewer-img" style="max-width:100%;display:none">
+        <div class="file-viewer-pdf" id="file-viewer-pdf" style="display:none">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <p>PDF Preview</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('file-viewer-modal')">Close</button>
+      <button class="btn btn-primary" onclick="showToast('Downloading file...')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
