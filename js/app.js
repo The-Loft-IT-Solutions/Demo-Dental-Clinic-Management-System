@@ -233,13 +233,25 @@ function toggleTheme() {
   showToast(newTheme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled', 'success');
 }
 
-// ===== TOOLBAR COLLAPSE =====
-function toggleAccessToolbar() {
-  const toolbar = document.getElementById('access-toolbar');
-  toolbar.classList.toggle('active');
-  // Toggle active state on all trigger buttons
+// ===== ACCESSIBILITY MODAL =====
+function closeAccessToolbar() {
+  const overlay = document.getElementById('access-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden', 'true');
   document.querySelectorAll('.mobile-access-btn, .sidebar-access-btn').forEach(btn => {
-    btn.classList.toggle('active', toolbar.classList.contains('active'));
+    btn.classList.remove('active');
+  });
+}
+
+function toggleAccessToolbar() {
+  const overlay = document.getElementById('access-modal-overlay');
+  if (!overlay) return;
+  const isOpen = !overlay.classList.contains('active');
+  overlay.classList.toggle('active', isOpen);
+  overlay.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+  document.querySelectorAll('.mobile-access-btn, .sidebar-access-btn').forEach(btn => {
+    btn.classList.toggle('active', isOpen);
   });
 }
 
@@ -800,7 +812,7 @@ function renderMonthView(grid) {
   }
 
   grid.innerHTML = html;
-  grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+  grid.style.gridTemplateColumns = 'repeat(7, minmax(0, 1fr))';
 }
 
 function renderWeekView(grid) {
@@ -842,7 +854,7 @@ function renderWeekView(grid) {
   }
 
   grid.innerHTML = html;
-  grid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+  grid.style.gridTemplateColumns = 'repeat(7, minmax(0, 1fr))';
 }
 
 function renderDayView(grid) {
@@ -1333,12 +1345,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
     document.getElementById('mobile-search-overlay').classList.remove('active');
-    // Close access toolbar
-    const toolbar = document.getElementById('access-toolbar');
-    if (toolbar) {
-      toolbar.classList.remove('active');
-      document.querySelectorAll('.mobile-access-btn, .sidebar-access-btn').forEach(btn => btn.classList.remove('active'));
-    }
+    closeAccessToolbar();
   }
   // Ctrl+K for search
   if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -1353,11 +1360,10 @@ document.addEventListener('click', (e) => {
   if (!e.target.closest('.search-box')) {
     document.querySelectorAll('.search-results').forEach(r => r.classList.remove('active'));
   }
-  // Close access toolbar when clicking outside
-  const toolbar = document.getElementById('access-toolbar');
-  if (toolbar && toolbar.classList.contains('active') && !e.target.closest('.access-toolbar') && !e.target.closest('.mobile-access-btn') && !e.target.closest('.sidebar-access-btn')) {
-    toolbar.classList.remove('active');
-    document.querySelectorAll('.mobile-access-btn, .sidebar-access-btn').forEach(btn => btn.classList.remove('active'));
+  // Close access modal when clicking outside panel (not on trigger buttons)
+  const accessOverlay = document.getElementById('access-modal-overlay');
+  if (accessOverlay && accessOverlay.classList.contains('active') && !e.target.closest('.access-toolbar') && !e.target.closest('.mobile-access-btn') && !e.target.closest('.sidebar-access-btn')) {
+    closeAccessToolbar();
   }
 });
 

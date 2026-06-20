@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="description" content="Dental Clinic Manager - Patient records, appointments, billing, and tooth charting">
 <title>Dental Clinic Manager - Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -10,34 +10,97 @@
 </head>
 <body class="show-option-a" data-theme="light">
 
-<!-- Accessibility Toolbar Panel -->
-<div class="access-toolbar" id="access-toolbar">
-  <div class="toolbar-left">
-    <span class="toolbar-label">Package</span>
-    <div class="toggle-group">
-      <button class="toggle-btn active" onclick="switchOption('a')" id="btn-opt-a">Basic</button>
-      <button class="toggle-btn" onclick="switchOption('b')" id="btn-opt-b">Pro</button>
+<!-- Accessibility Tools Modal -->
+<div class="access-modal-overlay" id="access-modal-overlay" onclick="if(event.target===this) closeAccessToolbar()" aria-hidden="true">
+  <div class="access-toolbar" id="access-toolbar" role="dialog" aria-labelledby="access-toolbar-title" aria-modal="true">
+    <div class="access-toolbar-header">
+      <div class="access-toolbar-heading">
+        <div class="access-toolbar-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </div>
+        <div>
+          <h2 id="access-toolbar-title">Accessibility Tools</h2>
+          <p>Customize how you view and interact with the app</p>
+        </div>
+      </div>
+      <button class="access-toolbar-close" onclick="closeAccessToolbar()" aria-label="Close accessibility tools">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <span class="option-badge option-a" id="option-badge">Basic</span>
-  </div>
-  <div class="toolbar-right">
-    <span class="toolbar-label">Text</span>
-    <div class="toggle-group">
-      <button class="toggle-btn active" onclick="setFontSize('normal')" id="btn-font-normal">Normal</button>
-      <button class="toggle-btn" onclick="setFontSize('large')" id="btn-font-large">Large</button>
+
+    <div class="access-toolbar-body">
+      <section class="access-section">
+        <div class="access-section-top">
+          <div class="access-section-info">
+            <div class="access-section-icon access-icon-package" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            </div>
+            <div>
+              <span class="access-section-label">Demo Package</span>
+              <span class="access-section-desc">Switch between Basic and Pro features</span>
+            </div>
+          </div>
+          <span class="option-badge option-a" id="option-badge">Basic</span>
+        </div>
+        <div class="toggle-group access-toggle-group">
+          <button class="toggle-btn active" onclick="switchOption('a')" id="btn-opt-a">Basic</button>
+          <button class="toggle-btn" onclick="switchOption('b')" id="btn-opt-b">Pro</button>
+        </div>
+      </section>
+
+      <section class="access-section">
+        <div class="access-section-top">
+          <div class="access-section-info">
+            <div class="access-section-icon access-icon-text" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+            </div>
+            <div>
+              <span class="access-section-label">Text Size</span>
+              <span class="access-section-desc">Increase text for easier reading</span>
+            </div>
+          </div>
+        </div>
+        <div class="toggle-group access-toggle-group">
+          <button class="toggle-btn active" onclick="setFontSize('normal')" id="btn-font-normal">Normal</button>
+          <button class="toggle-btn" onclick="setFontSize('large')" id="btn-font-large">Large</button>
+        </div>
+      </section>
+
+      <section class="access-section">
+        <div class="access-section-top">
+          <div class="access-section-info">
+            <div class="access-section-icon access-icon-contrast" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20z"/></svg>
+            </div>
+            <div>
+              <span class="access-section-label">Contrast</span>
+              <span class="access-section-desc">Boost color contrast for clarity</span>
+            </div>
+          </div>
+        </div>
+        <div class="toggle-group access-toggle-group">
+          <button class="toggle-btn active" onclick="setContrast('normal')" id="btn-contrast-normal">Normal</button>
+          <button class="toggle-btn" onclick="setContrast('high')" id="btn-contrast-high">High</button>
+        </div>
+      </section>
+
+      <div class="access-actions">
+        <button class="access-action-card voice-btn" id="global-voice-btn" onclick="toggleGlobalVoice()">
+          <span class="access-action-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+          </span>
+          <span class="access-action-label">Voice Input</span>
+          <span class="access-action-desc">Tap to start speaking</span>
+        </button>
+        <button class="access-action-card theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle dark mode">
+          <span class="access-action-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </span>
+          <span class="access-action-label">Theme</span>
+          <span class="access-action-desc">Switch light or dark mode</span>
+        </button>
+      </div>
     </div>
-    <span class="toolbar-label" style="margin-left:8px">Contrast</span>
-    <div class="toggle-group">
-      <button class="toggle-btn active" onclick="setContrast('normal')" id="btn-contrast-normal">Normal</button>
-      <button class="toggle-btn" onclick="setContrast('high')" id="btn-contrast-high">High</button>
-    </div>
-    <button class="voice-btn" id="global-voice-btn" onclick="toggleGlobalVoice()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-      Voice
-    </button>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle dark mode">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-    </button>
   </div>
 </div>
 
@@ -51,9 +114,6 @@
     <span class="logo-text">Dental Clinic</span>
   </div>
   <div class="mobile-header-actions">
-    <button class="mobile-access-btn" onclick="toggleAccessToolbar()" aria-label="Accessibility tools" title="Accessibility Tools">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    </button>
     <button class="mobile-search-btn" onclick="toggleMobileSearch()" aria-label="Search">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
     </button>
@@ -275,7 +335,7 @@
 
       <div class="card">
         <div class="patients-toolbar">
-          <div class="search-box" style="max-width:400px;flex:1">
+          <div class="search-box">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input type="text" placeholder="Search by name or phone..." id="patients-search-input" oninput="debouncedSearch(() => filterPatients(this.value))">
           </div>
