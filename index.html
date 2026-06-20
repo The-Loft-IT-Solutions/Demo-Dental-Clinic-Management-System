@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="Dental Clinic Manager - Patient records, appointments, billing, and tooth charting">
 <title>Dental Clinic Manager - Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="show-option-a" data-theme="light">
 
-<!-- Accessibility Toolbar -->
+<!-- Accessibility Toolbar Panel -->
 <div class="access-toolbar" id="access-toolbar">
   <div class="toolbar-left">
     <span class="toolbar-label">Package</span>
@@ -38,9 +39,6 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
     </button>
   </div>
-  <button class="toolbar-collapse" id="toolbar-collapse" onclick="toggleToolbar()" aria-label="Collapse toolbar">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
 </div>
 
 <!-- Mobile Header -->
@@ -52,9 +50,14 @@
     <div class="logo-icon">DC</div>
     <span class="logo-text">Dental Clinic</span>
   </div>
-  <button class="mobile-search-btn" onclick="toggleMobileSearch()" aria-label="Search">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-  </button>
+  <div class="mobile-header-actions">
+    <button class="mobile-access-btn" onclick="toggleAccessToolbar()" aria-label="Accessibility tools" title="Accessibility Tools">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </button>
+    <button class="mobile-search-btn" onclick="toggleMobileSearch()" aria-label="Search">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </button>
+  </div>
 </header>
 
 <!-- Mobile Search Overlay -->
@@ -82,9 +85,14 @@
           <p>Manager</p>
         </div>
       </div>
-      <button class="sidebar-close" onclick="toggleMobileSidebar()" aria-label="Close menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <div class="sidebar-header-actions">
+        <button class="sidebar-access-btn" onclick="toggleAccessToolbar()" aria-label="Accessibility tools" title="Accessibility Tools">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </button>
+        <button class="sidebar-close" onclick="toggleMobileSidebar()" aria-label="Close menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
     </div>
 
     <nav class="sidebar-nav" id="sidebar-nav">
@@ -227,7 +235,7 @@
             </div>
             <div class="search-box" style="max-width:100%">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input type="text" placeholder="Search by name or phone..." oninput="handleSearch(this)" id="dashboard-search">
+              <input type="text" placeholder="Search by name or phone..." oninput="debouncedSearch(() => handleSearch(this))" id="dashboard-search">
               <div class="search-results" id="dashboard-search-results"></div>
             </div>
             <div class="option-b-only" style="margin-top:16px">
@@ -269,7 +277,7 @@
         <div class="patients-toolbar">
           <div class="search-box" style="max-width:400px;flex:1">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <input type="text" placeholder="Search by name or phone..." id="patients-search-input" oninput="filterPatients(this.value)">
+            <input type="text" placeholder="Search by name or phone..." id="patients-search-input" oninput="debouncedSearch(() => filterPatients(this.value))">
           </div>
           <div class="option-b-only filter-chips-wrapper">
             <span style="font-size:13px;color:var(--text-muted);white-space:nowrap">Filters:</span>
@@ -636,6 +644,14 @@
         </div>
 
         <div class="calendar-grid" id="calendar-grid"></div>
+        <div class="calendar-legend" id="calendar-legend">
+          <span class="legend-label">Appointment Types:</span>
+          <span class="legend-item"><span class="legend-dot cleaning"></span> Cleaning</span>
+          <span class="legend-item"><span class="legend-dot checkup"></span> Check-up</span>
+          <span class="legend-item"><span class="legend-dot treatment"></span> Treatment</span>
+          <span class="legend-item"><span class="legend-dot followup"></span> Follow-up</span>
+          <span class="legend-item"><span class="legend-dot emergency"></span> Emergency</span>
+        </div>
       </div>
 
       <div class="card" style="margin-top:24px">
@@ -666,7 +682,7 @@
               <label class="form-label">Patient <span class="required">*</span></label>
               <div class="search-box" style="max-width:100%">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" placeholder="Search patient..." id="appt-patient-search" oninput="searchPatientsForAppt(this)" required>
+                <input type="text" placeholder="Search patient..." id="appt-patient-search" oninput="debouncedSearch(() => searchPatientsForAppt(this))" required>
                 <div class="search-results" id="appt-search-results"></div>
               </div>
               <input type="hidden" id="appt-patient-id">
@@ -759,26 +775,27 @@
         <div class="stat-card">
           <div class="stat-header">
             <div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/></svg></div>
-            <span class="feature-tag tag-option-b">Pro</span>
           </div>
-          <div class="stat-value">125K</div>
+          <div class="stat-value" data-count="125" data-prefix="" data-suffix="K">0</div>
           <div class="stat-label">Total Revenue (Jun)</div>
+          <div class="stat-change up">+8% vs last month</div>
         </div>
         <div class="stat-card">
           <div class="stat-header">
             <div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <span class="feature-tag tag-option-b">Pro</span>
           </div>
-          <div class="stat-value">42</div>
+          <div class="stat-value" data-count="42">0</div>
           <div class="stat-label">Treatments Done</div>
+          <div class="stat-change up">+5 vs May</div>
         </div>
         <div class="stat-card">
           <div class="stat-header">
             <div class="stat-icon red"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
             <span class="feature-tag tag-option-b">Pro</span>
           </div>
-          <div class="stat-value">3</div>
+          <div class="stat-value" data-count="3">0</div>
           <div class="stat-label">Pending Payments</div>
+          <div class="stat-change down">7,500 total</div>
         </div>
       </div>
 
@@ -827,7 +844,7 @@
               <label class="form-label">Patient <span class="required">*</span></label>
               <div class="search-box" style="max-width:100%">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                <input type="text" placeholder="Search patient..." id="invoice-patient-search" oninput="searchPatientsForInvoice(this)" required>
+                <input type="text" placeholder="Search patient..." id="invoice-patient-search" oninput="debouncedSearch(() => searchPatientsForInvoice(this))" required>
                 <div class="search-results" id="invoice-search-results"></div>
               </div>
               <input type="hidden" id="invoice-patient-id">
