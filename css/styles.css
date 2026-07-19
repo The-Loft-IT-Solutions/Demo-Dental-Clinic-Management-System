@@ -1367,6 +1367,8 @@ body.show-option-b .settings-grid.option-b-only { display: grid; }
 .dcw-pub-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .dcw-pub-feat { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
 .dcw-pub-feat-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 19px; margin-bottom: 12px; }
+.dcw-pub-feat-icon svg { width: 20px; height: 20px; }
+.dcw-nav-card h3 svg { width: 19px; height: 19px; vertical-align: -4px; margin-right: 4px; }
 .dcw-pub-feat h3 { font-size: 16.5px; margin-bottom: 6px; color: var(--secondary); }
 .dcw-pub-feat p { font-size: 13.5px; color: var(--text-muted); }
 .dcw-pub-testi { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; }
