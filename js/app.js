@@ -1,26 +1,26 @@
 // ===== DATA STORE =====
 const store = {
   patients: [
-    { id: 1, firstName: 'Maria', lastName: 'Santos', code: 'DC-2026-001', phone: '0917 123 4567', email: 'maria.santos@email.com', dob: '1985-03-15', gender: 'female', address: 'Block 6 Lot 2, Sample Subdivision, City', medicalHistory: 'Hypertension (controlled). No known drug allergies. Previous dental work: 2 fillings (2019).', allergies: 'None known', lastVisit: 'Jun 15, 2026', nextAppt: 'Jun 25, 2026', status: 'active' },
-    { id: 2, firstName: 'Juan', lastName: 'Cruz', code: 'DC-2026-002', phone: '0918 987 6543', email: 'juan.cruz@email.com', dob: '1990-07-22', gender: 'male', address: '123 Main Street, City', medicalHistory: 'None', allergies: 'Penicillin', lastVisit: 'Jun 10, 2026', nextAppt: 'Jul 02, 2026', status: 'completed' },
-    { id: 3, firstName: 'Rosa', lastName: 'Lim', code: 'DC-2026-003', phone: '0919 555 8888', email: 'rosa.lim@email.com', dob: '1978-11-05', gender: 'female', address: '456 Oak Avenue, City', medicalHistory: 'Diabetes Type 2', allergies: 'Latex', lastVisit: 'Jun 05, 2026', nextAppt: 'Jun 20, 2026', status: 'pending' },
-    { id: 4, firstName: 'Anna', lastName: 'Perez', code: 'DC-2026-004', phone: '0920 111 2222', email: 'anna.perez@email.com', dob: '1995-01-30', gender: 'female', address: '789 Pine Road, City', medicalHistory: 'Asthma', allergies: 'None', lastVisit: 'May 28, 2026', nextAppt: 'Jul 10, 2026', status: 'active' },
-    { id: 5, firstName: 'Carlos', lastName: 'Mendoza', code: 'DC-2026-005', phone: '0921 333 4444', email: 'carlos.m@email.com', dob: '1982-09-12', gender: 'male', address: '321 Elm Street, City', medicalHistory: 'None', allergies: 'None', lastVisit: 'Jun 18, 2026', nextAppt: 'Jul 15, 2026', status: 'active' },
-    { id: 6, firstName: 'Elena', lastName: 'Garcia', code: 'DC-2026-006', phone: '0922 555 6666', email: 'elena.g@email.com', dob: '1998-04-18', gender: 'female', address: '654 Maple Drive, City', medicalHistory: 'None', allergies: 'None', lastVisit: 'Jun 12, 2026', nextAppt: 'Jun 30, 2026', status: 'active' },
+    { id: 1, firstName: 'Sample', lastName: 'Patient 1', code: 'DC-2026-001', phone: '0900 000 0001', email: 'patient1@email.com', dob: '1985-03-15', gender: 'female', address: 'Sample Address 1, City', medicalHistory: 'Hypertension (controlled). No known drug allergies. Previous dental work: 2 fillings (2019).', allergies: 'None known', lastVisit: 'Jun 15, 2026', nextAppt: 'Jun 25, 2026', status: 'active' },
+    { id: 2, firstName: 'Sample', lastName: 'Patient 2', code: 'DC-2026-002', phone: '0900 000 0002', email: 'patient2@email.com', dob: '1990-07-22', gender: 'male', address: 'Sample Address 2, City', medicalHistory: 'None', allergies: 'Penicillin', lastVisit: 'Jun 10, 2026', nextAppt: 'Jul 02, 2026', status: 'completed' },
+    { id: 3, firstName: 'Sample', lastName: 'Patient 3', code: 'DC-2026-003', phone: '0900 000 0003', email: 'patient3@email.com', dob: '1978-11-05', gender: 'female', address: 'Sample Address 3, City', medicalHistory: 'Diabetes Type 2', allergies: 'Latex', lastVisit: 'Jun 05, 2026', nextAppt: 'Jun 20, 2026', status: 'pending' },
+    { id: 4, firstName: 'Sample', lastName: 'Patient 4', code: 'DC-2026-004', phone: '0900 000 0004', email: 'patient4@email.com', dob: '1995-01-30', gender: 'female', address: 'Sample Address 4, City', medicalHistory: 'Asthma', allergies: 'None', lastVisit: 'May 28, 2026', nextAppt: 'Jul 10, 2026', status: 'active' },
+    { id: 5, firstName: 'Sample', lastName: 'Patient 5', code: 'DC-2026-005', phone: '0900 000 0005', email: 'patient5@email.com', dob: '1982-09-12', gender: 'male', address: 'Sample Address 5, City', medicalHistory: 'None', allergies: 'None', lastVisit: 'Jun 18, 2026', nextAppt: 'Jul 15, 2026', status: 'active' },
+    { id: 6, firstName: 'Sample', lastName: 'Patient 6', code: 'DC-2026-006', phone: '0900 000 0006', email: 'patient6@email.com', dob: '1998-04-18', gender: 'female', address: 'Sample Address 6, City', medicalHistory: 'None', allergies: 'None', lastVisit: 'Jun 12, 2026', nextAppt: 'Jun 30, 2026', status: 'active' },
   ],
   appointments: [
-    { id: 1, patientId: 1, patientName: 'Maria Santos', type: 'cleaning', date: '2026-06-20', time: '09:00', status: 'scheduled', dentist: 'Dr. Demo' },
-    { id: 2, patientId: 2, patientName: 'Juan Cruz', type: 'checkup', date: '2026-06-20', time: '10:30', status: 'confirmed', dentist: 'Dr. Reyes' },
-    { id: 3, patientId: 3, patientName: 'Rosa Lim', type: 'treatment', date: '2026-06-20', time: '14:00', status: 'scheduled', dentist: 'Dr. Demo' },
-    { id: 4, patientId: 4, patientName: 'Anna Perez', type: 'followup', date: '2026-06-20', time: '16:00', status: 'pending', dentist: 'Dr. Santos' },
-    { id: 5, patientId: 1, patientName: 'Maria Santos', type: 'treatment', date: '2026-06-25', time: '09:00', status: 'scheduled', dentist: 'Dr. Demo' },
-    { id: 6, patientId: 2, patientName: 'Juan Cruz', type: 'cleaning', date: '2026-07-02', time: '10:00', status: 'scheduled', dentist: 'Dr. Reyes' },
+    { id: 1, patientId: 1, patientName: 'Sample Patient 1', type: 'cleaning', date: '2026-06-20', time: '09:00', status: 'scheduled', dentist: 'Dr. Demo' },
+    { id: 2, patientId: 2, patientName: 'Sample Patient 2', type: 'checkup', date: '2026-06-20', time: '10:30', status: 'confirmed', dentist: 'Dr. Sample A' },
+    { id: 3, patientId: 3, patientName: 'Sample Patient 3', type: 'treatment', date: '2026-06-20', time: '14:00', status: 'scheduled', dentist: 'Dr. Demo' },
+    { id: 4, patientId: 4, patientName: 'Sample Patient 4', type: 'followup', date: '2026-06-20', time: '16:00', status: 'pending', dentist: 'Dr. Sample B' },
+    { id: 5, patientId: 1, patientName: 'Sample Patient 1', type: 'treatment', date: '2026-06-25', time: '09:00', status: 'scheduled', dentist: 'Dr. Demo' },
+    { id: 6, patientId: 2, patientName: 'Sample Patient 2', type: 'cleaning', date: '2026-07-02', time: '10:00', status: 'scheduled', dentist: 'Dr. Sample A' },
   ],
   invoices: [
-    { id: 1, number: 'INV-2026-001', patientId: 1, patientName: 'Maria Santos', date: 'Jun 15, 2026', amount: 1500, status: 'paid', treatment: 'Dental Cleaning' },
-    { id: 2, number: 'INV-2026-002', patientId: 2, patientName: 'Juan Cruz', date: 'Jun 10, 2026', amount: 2800, status: 'paid', treatment: 'Tooth Filling' },
-    { id: 3, number: 'INV-2026-003', patientId: 3, patientName: 'Rosa Lim', date: 'Jun 05, 2026', amount: 3500, status: 'pending', treatment: 'Root Canal' },
-    { id: 4, number: 'INV-2026-004', patientId: 4, patientName: 'Anna Perez', date: 'May 28, 2026', amount: 4200, status: 'overdue', treatment: 'Crown Installation' },
+    { id: 1, number: 'INV-2026-001', patientId: 1, patientName: 'Sample Patient 1', date: 'Jun 15, 2026', amount: 1500, status: 'paid', treatment: 'Dental Cleaning' },
+    { id: 2, number: 'INV-2026-002', patientId: 2, patientName: 'Sample Patient 2', date: 'Jun 10, 2026', amount: 2800, status: 'paid', treatment: 'Tooth Filling' },
+    { id: 3, number: 'INV-2026-003', patientId: 3, patientName: 'Sample Patient 3', date: 'Jun 05, 2026', amount: 3500, status: 'pending', treatment: 'Root Canal' },
+    { id: 4, number: 'INV-2026-004', patientId: 4, patientName: 'Sample Patient 4', date: 'May 28, 2026', amount: 4200, status: 'overdue', treatment: 'Crown Installation' },
   ],
   files: [
     { id: 1, name: 'panoramic_2026.jpg', type: 'xray', size: '2.4 MB', date: 'Jun 15', patientId: 1 },
@@ -39,7 +39,7 @@ const store = {
   ],
   alerts: [
     { type: 'warning', title: 'Overdue Invoice', message: 'Patient #123 has an overdue invoice of 2,500', icon: 'alert' },
-    { type: 'info', title: 'Birthday Today', message: 'Send greeting to Maria Santos', icon: 'info' },
+    { type: 'info', title: 'Birthday Today', message: 'Send greeting to Sample Patient 1', icon: 'info' },
   ],
   teeth: {
     upper: [

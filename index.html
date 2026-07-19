@@ -10,6 +10,133 @@
 </head>
 <body class="show-option-a" data-theme="light">
 
+<!-- ============ DEMO NAVIGATOR ============ -->
+<div id="dcwNavigator">
+  <div class="dcw-nav-label">Interactive Demo</div>
+  <h1 class="dcw-nav-title">Dental Clinic Management System</h1>
+  <p class="dcw-nav-sub">A dual-sided system for dental clinics: a patient-facing site for booking appointments, and a full clinic management dashboard for staff. Choose a view to begin &mdash; you can switch anytime.</p>
+  <div class="dcw-nav-cards">
+    <div class="dcw-nav-card" data-view="public">
+      <h3>&#129688; Public Site</h3>
+      <p>The clinic website prospective and existing patients see &mdash; services, and an appointment request form.</p>
+    </div>
+    <div class="dcw-nav-card" data-view="admin">
+      <h3>&#128209; Clinic Dashboard</h3>
+      <p>Staff-facing system for patient records, appointments, billing, and tooth charting.</p>
+    </div>
+  </div>
+  <div class="dcw-nav-note">You can jump between views anytime using the pill switcher at the bottom of the screen.</div>
+</div>
+
+<!-- ============ VIEW SWITCHER ============ -->
+<div id="dcwSwitcher" class="dcw-hidden">
+  <button class="dcw-menu-btn" onclick="dcwShowNavigator()">&#8617; Menu</button>
+  <button data-view="public" onclick="dcwSwitchView('public')">Public Site</button>
+  <button data-view="admin" onclick="dcwSwitchView('admin')">Clinic Dashboard</button>
+</div>
+
+<div id="dcwPoweredBy" class="dcw-hidden">Powered by <a href="https://theloftitsolutions.com" target="_blank" rel="noopener">The Loft IT Solutions</a></div>
+
+<!-- ============ PUBLIC / CUSTOMER-FACING VIEW ============ -->
+<div id="dcwPublicView" class="dcw-hidden">
+  <header class="dcw-pub-nav">
+    <div class="dcw-pub-nav-inner">
+      <div class="dcw-pub-logo"><div class="logo-icon" style="background:var(--primary);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;">DC</div>Dental Clinic</div>
+      <nav class="dcw-pub-links">
+        <a href="#dcw-services">Services</a>
+        <a href="#dcw-testimonials">Testimonials</a>
+        <a href="#dcw-book">Contact</a>
+      </nav>
+      <a href="#dcw-book" class="dcw-pub-cta">Book an Appointment</a>
+    </div>
+  </header>
+
+  <section class="dcw-pub-hero">
+    <div class="dcw-pub-hero-text">
+      <div class="dcw-pub-eyebrow">Dental Clinic</div>
+      <h1>Healthy smiles, handled with care.</h1>
+      <p>From routine cleanings to root canals, our team keeps your dental health on track &mdash; with easy online appointment requests and clear treatment plans.</p>
+      <div class="dcw-pub-hero-actions">
+        <a href="#dcw-book" class="dcw-pub-cta">Request an Appointment</a>
+        <a href="#dcw-services" class="dcw-pub-btn-outline">View Services</a>
+      </div>
+    </div>
+    <div class="dcw-pub-hero-visual">
+      <div class="row"><span>Today at the clinic</span><span>Live</span></div>
+      <div class="dcw-pub-card"><b>8</b><div style="font-size:12.5px;color:var(--text-muted);">Appointments scheduled</div></div>
+      <div class="dcw-pub-card"><b>245</b><div style="font-size:12.5px;color:var(--text-muted);">Patients cared for</div></div>
+      <div class="dcw-pub-card"><b>3</b><div style="font-size:12.5px;color:var(--text-muted);">Dentists on staff</div></div>
+    </div>
+  </section>
+
+  <div class="dcw-pub-stats-strip">
+    <div class="dcw-pub-stats-inner">
+      <div><div class="dcw-pub-stat-num">245+</div><div class="dcw-pub-stat-label">Patients Served</div></div>
+      <div><div class="dcw-pub-stat-num">3</div><div class="dcw-pub-stat-label">Dentists on Staff</div></div>
+      <div><div class="dcw-pub-stat-num">98%</div><div class="dcw-pub-stat-label">Patient Satisfaction</div></div>
+      <div><div class="dcw-pub-stat-num">15+</div><div class="dcw-pub-stat-label">Years Serving the Community</div></div>
+    </div>
+  </div>
+
+  <section class="dcw-pub-section" id="dcw-services">
+    <div class="dcw-pub-section-head">
+      <h2>Our Services</h2>
+      <p>Comprehensive dental care for the whole family.</p>
+    </div>
+    <div class="dcw-pub-grid-3">
+      <div class="dcw-pub-feat"><div class="dcw-pub-feat-icon">&#129535;</div><h3>Cleanings &amp; Check-ups</h3><p>Routine cleanings and exams to keep your smile healthy year-round.</p></div>
+      <div class="dcw-pub-feat"><div class="dcw-pub-feat-icon">&#129704;</div><h3>Fillings &amp; Root Canals</h3><p>Restorative treatments for cavities and deeper dental issues.</p></div>
+      <div class="dcw-pub-feat"><div class="dcw-pub-feat-icon">&#128188;</div><h3>Crowns &amp; Extractions</h3><p>From crown installation to safe, comfortable extractions.</p></div>
+      <div class="dcw-pub-feat"><div class="dcw-pub-feat-icon">&#128203;</div><h3>Digital Records</h3><p>Your history, x-rays, and treatment plan, always up to date.</p></div>
+      <div class="dcw-pub-feat"><div class="dcw-pub-feat-icon">&#128197;</div><h3>Easy Scheduling</h3><p>Request an appointment online and get confirmation from our team.</p></div>
+      <div class="dcw-pub-feat"><div class="dcw-pub-feat-icon">&#128179;</div><h3>Transparent Billing</h3><p>Clear invoices and multiple payment options, including GCash and Maya.</p></div>
+    </div>
+  </section>
+
+  <section class="dcw-pub-section" id="dcw-testimonials" style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="dcw-pub-section-head">
+      <h2>What our patients say</h2>
+    </div>
+    <div class="dcw-pub-grid-3">
+      <div class="dcw-pub-testi"><p>"Booking was easy and the reminders meant I never missed a visit."</p>
+        <div class="dcw-pub-t-person"><div class="dcw-pub-t-avatar">SP</div><div><div class="dcw-pub-t-name">Sample Patient</div><div class="dcw-pub-t-role">Patient</div></div></div></div>
+      <div class="dcw-pub-testi"><p>"The staff explained my treatment plan clearly before any work started."</p>
+        <div class="dcw-pub-t-person"><div class="dcw-pub-t-avatar">SP</div><div><div class="dcw-pub-t-name">Sample Patient</div><div class="dcw-pub-t-role">Patient</div></div></div></div>
+      <div class="dcw-pub-testi"><p>"Billing was transparent and I could pay through GCash right away."</p>
+        <div class="dcw-pub-t-person"><div class="dcw-pub-t-avatar">SP</div><div><div class="dcw-pub-t-name">Sample Patient</div><div class="dcw-pub-t-role">Patient</div></div></div></div>
+    </div>
+  </section>
+
+  <section class="dcw-pub-section" id="dcw-book">
+    <div class="dcw-pub-form-section">
+      <div class="dcw-pub-form-info">
+        <h2 style="font-size:24px;margin-bottom:12px;color:var(--secondary);">Request an appointment</h2>
+        <p style="color:var(--text-muted);font-size:14px;">Send your details and our team will confirm a time. This is the same request that lands directly in the clinic's Appointments calendar.</p>
+      </div>
+      <form onsubmit="return dcwHandleBooking(event)">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="your@email.com" required>
+        <input type="tel" placeholder="+63 900 000 0001">
+        <select><option>Cleaning &amp; Check-up</option><option>Filling</option><option>Root Canal</option><option>Consultation</option></select>
+        <textarea placeholder="Preferred date/time or notes (optional)"></textarea>
+        <button class="dcw-pub-submit-btn" type="submit">Send Request</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="dcw-pub-footer">
+    <div class="dcw-pub-footer-inner">
+      <div><h4>Dental Clinic</h4><p>Comprehensive dental care<br>for the whole family.</p></div>
+      <div><h4>Site</h4><a href="#dcw-services">Services</a><br><a href="#dcw-testimonials">Testimonials</a><br><a href="#dcw-book">Book an Appointment</a></div>
+      <div><h4>Contact</h4><p>123 Clinic Street, City<br>+63 123 456 7890</p></div>
+    </div>
+    <div class="dcw-pub-footer-bottom">Demo interface &mdash; sample data shown for illustration only.</div>
+  </footer>
+</div>
+
+<!-- ============ ADMIN / INTERNAL VIEW ============ -->
+<div id="dcwAdminView" class="dcw-hidden">
+
 <!-- Accessibility Tools Modal -->
 <div class="access-modal-overlay" id="access-modal-overlay" onclick="if(event.target===this) closeAccessToolbar()" aria-hidden="true">
   <div class="access-toolbar" id="access-toolbar" role="dialog" aria-labelledby="access-toolbar-title" aria-modal="true">
@@ -489,8 +616,8 @@
     <div class="page" id="page-patients-detail">
       <div class="page-header">
         <div class="page-title">
-          <h2 id="detail-patient-name">Maria Santos</h2>
-          <p id="detail-patient-meta">DC-2026-001 &bull; 0917 123 4567</p>
+          <h2 id="detail-patient-name">Sample Patient 1</h2>
+          <p id="detail-patient-meta">DC-2026-001 &bull; 0900 000 0001</p>
         </div>
         <div class="quick-actions">
           <button class="btn btn-secondary" onclick="navigateTo('patients')">
@@ -518,21 +645,21 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">First Name</label>
-              <input type="text" value="Maria" disabled class="detail-field" data-field="firstName">
+              <input type="text" value="Sample" disabled class="detail-field" data-field="firstName">
             </div>
             <div class="form-group">
               <label class="form-label">Last Name</label>
-              <input type="text" value="Santos" disabled class="detail-field" data-field="lastName">
+              <input type="text" value="Patient 1" disabled class="detail-field" data-field="lastName">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Phone</label>
-              <input type="text" value="0917 123 4567" disabled class="detail-field" data-field="phone">
+              <input type="text" value="0900 000 0001" disabled class="detail-field" data-field="phone">
             </div>
             <div class="form-group">
               <label class="form-label">Email</label>
-              <input type="text" value="maria.santos@email.com" disabled class="detail-field" data-field="email">
+              <input type="text" value="patient1@email.com" disabled class="detail-field" data-field="email">
             </div>
           </div>
           <div class="form-row">
@@ -547,7 +674,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Address</label>
-            <textarea disabled class="detail-field" data-field="address" rows="3">Block 6 Lot 2, Sample Subdivision, City</textarea>
+            <textarea disabled class="detail-field" data-field="address" rows="3">Sample Address 1, City</textarea>
           </div>
           <div class="form-group">
             <label class="form-label">Medical History</label>
@@ -777,8 +904,8 @@
             <select id="appt-dentist">
               <option value="">Select dentist</option>
               <option value="1">Dr. Demo</option>
-              <option value="2">Dr. Reyes</option>
-              <option value="3">Dr. Santos</option>
+              <option value="2">Dr. Sample A</option>
+              <option value="3">Dr. Sample B</option>
             </select>
           </div>
 
@@ -1023,7 +1150,7 @@
       <div class="page-header">
         <div class="page-title">
           <h2 id="invoice-detail-title">Invoice INV-2026-001</h2>
-          <p id="invoice-detail-meta">Maria Santos &bull; Jun 15, 2026</p>
+          <p id="invoice-detail-meta">Sample Patient 1 &bull; Jun 15, 2026</p>
         </div>
         <div class="quick-actions">
           <button class="btn btn-secondary" onclick="navigateTo('billing')">
@@ -1053,9 +1180,9 @@
           </div>
           <div style="margin-bottom:24px">
             <h4 style="font-size:13px;color:var(--text-muted);margin-bottom:4px">Bill To:</h4>
-            <p style="font-weight:600;font-size:16px">Maria Santos</p>
-            <p style="font-size:14px;color:var(--text-muted)">0917 123 4567</p>
-            <p style="font-size:14px;color:var(--text-muted)">maria.santos@email.com</p>
+            <p style="font-weight:600;font-size:16px">Sample Patient 1</p>
+            <p style="font-size:14px;color:var(--text-muted)">0900 000 0001</p>
+            <p style="font-size:14px;color:var(--text-muted)">patient1@email.com</p>
           </div>
           <div class="invoice-body">
             <div class="invoice-row" style="font-weight:600;border-bottom:2px solid var(--border)">
@@ -1159,7 +1286,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Email</label>
-                <input type="email" value="clinic@demo.com" id="clinic-email">
+                <input type="email" value="admin@yourbrand.com" id="clinic-email">
               </div>
             </div>
             <button type="submit" class="btn btn-primary">
@@ -1205,12 +1332,12 @@
             <form id="login-form" onsubmit="handleLogin(event)">
               <div class="form-group">
                 <label class="form-label">Email</label>
-                <input type="email" placeholder="Enter your email" value="demo@clinic.com" id="login-email" required>
+                <input type="email" placeholder="Enter your email" value="admin@yourbrand.com" id="login-email" required>
               </div>
               <div class="form-group">
                 <label class="form-label">Password</label>
                 <div class="password-wrapper">
-                  <input type="password" placeholder="Enter your password" value="password" id="login-password" required>
+                  <input type="password" placeholder="Enter your password" value="demo1234" id="login-password" required>
                   <button type="button" class="password-toggle" onclick="togglePassword(this)">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   </button>
@@ -1232,7 +1359,7 @@
               </div>
             </form>
           </div>
-          <p class="login-footer">Powered by Demo Systems</p>
+          <p class="login-footer">Interactive demo &mdash; sample data shown for illustration only</p>
         </div>
       </div>
     </div>
@@ -1317,6 +1444,40 @@
     </div>
   </div>
 </div>
+
+</div><!-- /#dcwAdminView -->
+
+<script>
+  // ===== DEMO NAVIGATOR / VIEW SWITCHER (Demo Standard additions) =====
+  function dcwShowNavigator(){
+    document.getElementById('dcwNavigator').classList.remove('dcw-hidden');
+    document.getElementById('dcwSwitcher').classList.add('dcw-hidden');
+    document.getElementById('dcwPoweredBy').classList.add('dcw-hidden');
+    document.getElementById('dcwPublicView').classList.add('dcw-hidden');
+    document.getElementById('dcwAdminView').classList.add('dcw-hidden');
+  }
+  document.querySelectorAll('.dcw-nav-card').forEach(c => c.addEventListener('click', () => dcwSelectView(c.dataset.view)));
+
+  function dcwSelectView(view){
+    document.getElementById('dcwNavigator').classList.add('dcw-hidden');
+    document.getElementById('dcwSwitcher').classList.remove('dcw-hidden');
+    document.getElementById('dcwPoweredBy').classList.remove('dcw-hidden');
+    dcwSwitchView(view);
+  }
+  function dcwSwitchView(view){
+    document.getElementById('dcwPublicView').classList.toggle('dcw-hidden', view !== 'public');
+    document.getElementById('dcwAdminView').classList.toggle('dcw-hidden', view !== 'admin');
+    document.querySelectorAll('#dcwSwitcher button[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+    window.scrollTo(0,0);
+  }
+  function dcwHandleBooking(e){
+    e.preventDefault();
+    if (typeof showToast === 'function') { showToast('Appointment request sent! Our team will confirm shortly.'); }
+    else { alert('Appointment request sent! Our team will confirm shortly.'); }
+    e.target.reset();
+    return false;
+  }
+</script>
 
 <script src="js/app.js"></script>
 </body>
