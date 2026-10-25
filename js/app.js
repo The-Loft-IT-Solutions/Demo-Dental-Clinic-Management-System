@@ -64,7 +64,7 @@ const store = {
     { month: 'Apr', value: 92 }, { month: 'May', value: 115 }, { month: 'Jun', value: 125 },
   ],
   treatmentBreakdown: [
-    { name: 'Cleaning', percent: 35, color: '#0ea5ff' },
+    { name: 'Cleaning', percent: 35, color: '#12b886' },
     { name: 'Fillings', percent: 25, color: '#f59e0b' },
     { name: 'Root Canal', percent: 20, color: '#ef4444' },
     { name: 'Extractions', percent: 12, color: '#22c55e' },
